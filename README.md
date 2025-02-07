@@ -13,7 +13,7 @@ For speed, our example only simulates sound propagation in an anechoic room. You
 Running the following will download the LibriSpeech data, perform acoustic simulations using pyroomacoustics, train NGCC-PHAT and store the model. 
 
 ```
-python main.py --cfg=cfg --model=ngcc --exp_name=ngcc_anechoic
+python main.py --cfg=cfg --model=ngccphat --exp_name=ngcc_anechoic
 ```
 
 ## wav2pos training
