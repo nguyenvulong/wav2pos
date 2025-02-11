@@ -32,11 +32,11 @@ After you have trained your model, you can try visualizing evaluations using the
 If you use this code repository, please cite the following paper:
 
 ```
-@article{berg2024wav2pos,
+@inproceedings{berg2024wav2pos,
   title={wav2pos: Sound Source Localization using Masked Autoencoders},
-  author={Berg, Axel and Gulin, Jens and O'Connor, Mark and Zhou, Chuteng and {\AA}str{\"o}m, Karl and Oskarsson, Magnus},
-  journal={arXiv preprint arXiv:2408.15771},
-  year={2024}
+  author={Berg, Axel and Gulin, Jens and O’Connor, Mark and Zhou, Chuteng and {\AA}str{\"o}m, Karl and Oskarsson, Magnus},
+  booktitle={2024 14th International Conference on Indoor Positioning and Indoor Navigation (IPIN)},
+  year={2024},
 }
 ```
 
