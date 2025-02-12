@@ -10,7 +10,7 @@ import torch.nn.functional as F
 import torch.nn as nn
 from torch.autograd import Variable
 import math
-from torch_same_pad import get_pad
+from ngcc.torch_same_pad import get_pad
 
 
 def flip(x, dim):

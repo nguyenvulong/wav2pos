@@ -2,10 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-from torch_same_pad import get_pad
 from ngcc.dnn_models import SincNet
+from ngcc.torch_same_pad import get_pad
 import torch.fft
 from torch_audiomentations import AddColoredNoise
+
 
 class GCC(nn.Module):
     def __init__(self, max_tau=None, dim=2, filt='phat', epsilon=0.001, beta=None):
@@ -197,8 +198,11 @@ class masked_NGCCPHAT(nn.Module):
         x2list = []
         tdoa_list = []
         for b in range(bs):
+            # Select from microphone indices
             m1 = np.random.randint(low=1, high=self.num_mics)
             m2 = np.random.randint(low=1, high=self.num_mics)
+            while m2 == m1:  # Ensure we select different microphones
+                m2 = np.random.randint(low=1, high=self.num_mics)
 
             x1 = audio[b, m1]
             x2 = audio[b, m2]
@@ -240,7 +244,6 @@ class masked_NGCCPHAT(nn.Module):
             pred_tdoa = shift_gcc - self.max_tau
 
         return loss_tdoa, pred_tdoa
-
 
 
     def get_features(self, audio, ids_keep=None, normalize=False):
@@ -371,5 +374,3 @@ class masked_NGCCPHAT(nn.Module):
 
         features = cc.squeeze(2) # [B, N, L] (C=1)
         return features
-
-

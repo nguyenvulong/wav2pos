@@ -1,0 +1,13 @@
+experiments*/*
+LibriSpeech/*
+
+*.pyc
+*.flac
+
+*.pt
+*.pth
+
+*.tar.gz
+*.npz
+
+*.pdf

@@ -18,7 +18,7 @@ def create_mask(ids_keep, cfg, bs, device, n_patch_per_mic):
         all_audio = all_audio.reshape(bs, n_patch_per_mic, num_audio)
         
         if cfg.toa_prob > 0.:  
-            toa_idx = []
+            # toa_idx = []
             all_audio_new = np.zeros_like(all_audio)[:, :, :-1]
             for b in range(bs):
                 if np.random.rand() > cfg.toa_prob:
@@ -70,7 +70,7 @@ def create_mask(ids_keep, cfg, bs, device, n_patch_per_mic):
         this_ids_keep = torch.cat((mics_keep, audio_keep), dim=1)
         this_ids_keep, _ = torch.sort(this_ids_keep, dim=1)
 
-    elif cfg.random_masking == False:
+    elif not cfg.random_masking:
         this_ids_keep = ids_keep.repeat(bs, 1)
     else:
         raise ValueError('Select a valid masking strategy')

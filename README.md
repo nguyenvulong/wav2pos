@@ -4,7 +4,16 @@
 
 This repository contains a reference implementation of [wav2pos](https://arxiv.org/abs/2408.15771), as well as code for training the model for 3D sound source localization on simulated speech data.
 
-Tested using python 3.8 and torch 2.1.
+Tested using python 3.12.1 and torch 2.6.0.
+
+## CHANGELOG
+- Re-implement `torch_same_pad` instead of using [CyberZHG/torch-same-pad](https://github.com/CyberZHG/torch-same-pad).
+- Update packages to work with Python 3.12 and PyTorch 2.6
+
+## Installation
+```
+uv pip install -r requirements.txt
+```
 
 ## Data generation and NGCC-PHAT pre-training
 
