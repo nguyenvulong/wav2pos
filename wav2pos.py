@@ -1,9 +1,7 @@
-from functools import partial
 import torch
 import torch.nn as nn
 from timm.models.vision_transformer import Block
 from ngcc.model import masked_NGCCPHAT
-import math
 from torch_audiomentations import AddColoredNoise
 
 
@@ -41,8 +39,8 @@ class PatchEmbedAudio(nn.Module):
     def forward(self, x):
         x = x.unsqueeze(1)
         B, _, N, L = x.shape
-        assert(L == self.audio_len,
-               f"Input audio length ({L}) doesn't match model ({self.audio_len}).")
+        assert L == self.audio_len, \
+               f"Input audio length ({L}) doesn't match model ({self.audio_len})."
     
         x = self.proj(x)
         x = x.flatten(2)  # BCNL-> BCM
@@ -116,7 +114,7 @@ class wav2pos(nn.Module):
 
         self.blocks = nn.ModuleList([
             Block(embed_dim, num_heads, mlp_ratio, qkv_bias=True,
-                  norm_layer=norm_layer, drop=self.drop, attn_drop=self.attn_drop)
+                  norm_layer=norm_layer, proj_drop=self.drop, attn_drop=self.attn_drop)
             for i in range(depth)])
         self.patch_norm = norm_layer(patch_size)
         self.norm = norm_layer(embed_dim)
@@ -136,7 +134,7 @@ class wav2pos(nn.Module):
 
         self.decoder_blocks = nn.ModuleList([
             Block(decoder_embed_dim, decoder_num_heads, mlp_ratio, qkv_bias=True,
-                  norm_layer=norm_layer, drop=self.drop, attn_drop=self.attn_drop)
+                  norm_layer=norm_layer, proj_drop=self.drop, attn_drop=self.attn_drop)
             for i in range(decoder_depth)])
 
         self.decoder_norm = norm_layer(decoder_embed_dim)
@@ -457,7 +455,7 @@ class wav2pos(nn.Module):
         elif self.use_ngcc == 'pre-trained':
             with torch.no_grad():
                 feature = self.ngcc.get_features(x_masked, ids_keep="all")
-        elif self.use_ngcc == False:
+        elif not self.use_ngcc:
             feature = None
         else:
             raise ValueError('select valid ngcc format')
